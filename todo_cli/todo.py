@@ -1,78 +1,100 @@
 #!/usr/bin/env python3
-# Create a local todo list with numbered tasks. 
+"""
+Simple command line todo list stored in a local JSON file. 
+"""
 
 import json
 import os
+from pathlib import Path
 
-tasks = {}
-curr_path = os.getcwd()
-print(curr_path)
+TASKS_FILE = Path.cwd() / "tasks.json"
 
-while True:
-    print("\n1. Add task\n2. View tasks\n3. Tick task off\n4. Wipe tasks\n5. Exit")
-    choice = input("Please choose: ") or "1"
-    if choice == "1": # Add new task
-        with open(f"{curr_path}/tasks.json", "a+") as f:
-            f.seek(0) # Read mode: Bring pointer to beginning of file
-            try:
-                tasks = json.load(f) # Obtain existing tasks 
-            except (json.JSONDecodeError, ValueError):
-                tasks = {}  # File was empty or didn't exist
-            num = len(tasks) + 1 # Task number of next task 
-            task = input("Task: ") 
-            tasks[num] = task # Update tasks dictionary 
-            f.seek(0)
-            f.truncate()  # Clear file before writing
-            json.dump(tasks, f)
-        print("Added!")
+def load_tasks():
+    if not TASKS_FILE: 
+        return {}
+    try:
+        with TASKS_FILE.open("r") as f:
+            return {int(k): v for k, v in json.load(f).items()}
+    except (json.JSONDecodeError, ValueError): 
+        return {}
 
-    elif choice == "2": # View tasks
-        print("\n--- Your Tasks ---")
-        try:
-            with open(f"{curr_path}/tasks.json") as f: 
-                tasks = json.load(f)
-                print("\n".join(f"{k}. {v}" for k,v in tasks.items())) 
-        except FileNotFoundError: 
-            print("No tasks yet.")       
+
+def save_tasks(tasks): 
+    with TASKS_FILE.open("w") as f:
+        json.dump({str(k): v for k, v in tasks.items()}, f, indent=2)
+
+
+def add_task():
+    tasks = load_tasks()
+    new_id = max(tasks.keys(), default=0) + 1
+    description = input("Task: ").strip()
+    if not description:
+        print("No description entered.")
+        return
+    tasks[new_id] = description
+    save_tasks(tasks)
+    print("Added!")
+
+
+def view_tasks():
+    tasks = load_tasks()
+    if not tasks:
+        print("No tasks yet.")
+        return
+    print("\n--- Your Tasks ---")
+    for k, v in tasks.items():
+        print(f"{k}. {v}")
+
+def tick_task():
+    tasks = load_tasks()
+    if not tasks:
+        print("No tasks yet.")
+        return
     
-    elif choice == "3": # Tick off task
-        indx_str = input("Task number to tick off: ") or "1"
-        indx = int(indx_str)
-        try:
-            with open(f"{curr_path}/tasks.json", 'r+') as f:
-                tasks = json.load(f)
-                keys = [*tasks]
-                task = tasks[str(indx)]
-                try: 
-                    tasks.pop(str(indx))
-                    while indx < int(keys[-1]): 
-                        tasks[str(indx)] = tasks.pop(str(indx + 1))
-                        indx += 1
-                except KeyError:
-                     print("Task number is higher than number of tasks.")
-                f.seek(0)
-                json.dump(tasks, f)
-                f.truncate()
-                print(f'Well done! You completed: {task}!')
-        except FileNotFoundError:
-            print("No tasks yet.")
+    try:
+        idx = int(input("Task number to tick off: ").strip() or "1")
+    except ValueError:
+        print("Invalid number.")
+        return
+    
+    if idx not in tasks:
+        print("No such task.")
+        return
 
-    elif choice == "4": # Wipe task list
-        really = input("Are you sure Y/n?")
-        if really == "Y" or really == "y":
-            with open(f"{curr_path}/tasks.json", "w") as f: 
-                f.seek(0)
-                f.truncate()
+    done = tasks.pop(idx)
+    reordered = {}
+    for new_idx, original_idx in enumerate(sorted(tasks.keys()), start=1):
+        reordered[new_idx] = tasks[original_idx]
 
-    elif choice == "5": # Exit program
-        break
+    save_tasks(reordered)
+    print(f"Completed: {done}") 
 
 
+def wipe_tasks():
+    confirm = input("Are you sure? Y/n ").strip().lower()
+    if confirm == "y":
+        save_tasks({})
+        print("Wiped.")
+    else:
+        print("Cancelled.")
 
+def main():
+    while True:
+        print("\n1. Add task\n2. View tasks\n3. Tick task off\n4. Wipe tasks\n5. Exit")
+        choice = input("Please choose: ").strip() or "1"
 
+        if choice == "1":
+            add_task()
+        elif choice == "2":
+            view_tasks()
+        elif choice == "3":
+            tick_task()
+        elif choice == "4":
+            wipe_tasks()
+        elif choice == "5":
+            break
+        else:
+            print("Invalid option.")
 
-# Todo: 
-# use script from global script folder.  
-# tagged tasks. 
-# sync tasks (with obsidian). 
-# subgroup tasks (use json format). 
+if __name__ == "__main__":
+    main()

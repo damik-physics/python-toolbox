@@ -1,8 +1,8 @@
 # Python Toolbox
 
-A curated collection of small, practical Python projects and automation tools to solve real everyday problems, demonstrate specific programming concepts, or explore a useful technique in modern Python development.
+A curated collection of small, practical Python projects and automation tools to solve everyday problems, demonstrate specific programming concepts, or explore a useful technique in modern Python development.
 
-The goal of this repository is to build a clear, structured portfolio showing clean code, maintainable design, and consistent improvement in Python skills.
+The goal of this repository is to build a clear, structured portfolio showing clean and maintainable code as well as tracking consistent improvement in Python skills.
 
 ## Contents
 
@@ -23,8 +23,8 @@ Located in: `todo_cli/`
 
 This repository will be expanded with further tools, including:
 
-- file automation utilities  
-- data parsing scripts  
+- file automation utilities
+- data parsing scripts
 - argparse-based command line tools  
 - SQLite-backed utilities  
 - colored terminal apps  
