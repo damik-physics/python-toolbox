@@ -52,6 +52,7 @@ This repository follows three principles:
 
 ## Structure
 
+```text
 python-toolbox/
 ├── README.md
 ├── todo_cli/
@@ -60,6 +61,7 @@ python-toolbox/
 ├── file_tools/
 ├── data_tools/
 └── learning/
+```
 
 ## Requirements
 
