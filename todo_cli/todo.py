@@ -88,7 +88,7 @@ def main():
             tick_task()
         elif choice == "4":
             wipe_tasks()
-        elif choice == "5":
+        elif choice == "5" or choice.lower() == "q":
             break
         else:
             print("Invalid option.")
