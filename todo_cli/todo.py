@@ -4,18 +4,15 @@ Simple command line todo list stored in a local JSON file.
 """
 
 import json
-import os
 from pathlib import Path
 
 TASKS_FILE = Path.cwd() / "tasks.json"
 
 def load_tasks():
-    if not TASKS_FILE: 
-        return {}
     try:
         with TASKS_FILE.open("r") as f:
             return {int(k): v for k, v in json.load(f).items()}
-    except (json.JSONDecodeError, ValueError): 
+    except (json.JSONDecodeError, ValueError, FileNotFoundError): 
         return {}
 
 
