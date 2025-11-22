@@ -19,7 +19,12 @@ Demonstrates:
 
 Located in: `todo_cli/`
 
-### 2. Additional Mini Projects
+### 2. Flashcard CLI
+
+A lightweight command line flashcard trainer with JSON storage.
+
+
+### 3. Additional Mini Projects
 
 This repository will be expanded with further tools, including:
 
