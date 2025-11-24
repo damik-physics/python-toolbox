@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-
+print(f"Importing {__name__}")
 CARDS_FILE = Path(__file__).parent / "cards.json"
 
     
