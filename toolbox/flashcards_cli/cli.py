@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 print(f"Importing {__name__}")
 from .storage import load_cards, save_cards
 

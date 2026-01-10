@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-toolbox"
+version = "0.1.0"
+description = "Collection of small Python utilities including a todo list CLI and a flashcards CLI"
+requires-python = ">=3.10"
+authors = [
+    {name = "David"}
+]
+
+
+dependencies = [
+    "typer>=0.21.1"
+]
+
+[project.scripts]
+flash = "toolbox.flashcards_cli.cli:main"
+todo = "toolbox.todo_cli.cli:main"
+pt-init = "toolbox.scaffolder.cli:app" 
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["toolbox*"]
