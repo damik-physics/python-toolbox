@@ -22,5 +22,5 @@ todo = "toolbox.todo_cli.cli:main"
 pt-init = "toolbox.scaffolder.cli:app" 
 
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]
 include = ["toolbox*"]
