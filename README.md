@@ -1,85 +1,71 @@
 # Python Toolbox
 
-A curated collection of small, practical Python projects and automation tools to solve everyday problems, demonstrate specific programming concepts, or explore a useful technique in modern Python development.
+A collection of modular Python CLI utilities for automation, developer productivity, and system optimization. This project is structured as a unified package leveraging modern Python standards.
 
-The goal of this repository is to build a clear, structured portfolio showing clean and maintainable code as well as tracking consistent improvement in Python skills.
+## Installation
 
-## Contents
+The toolbox is designed to be installed as a unified package. To install the utilities and their dependencies, run:
 
-### 1. Todo CLI
-
-A simple command line task manager that stores tasks in JSON format.  
-Demonstrates:
-
-- CLI workflow design  
-- File handling with `pathlib`  
-- Persistent storage  
-- Modular code structure  
-- Input validation and error handling  
-
-Located in: `todo_cli/`
-
-### 2. Flashcard CLI
-
-A lightweight command line flashcard trainer with JSON storage.
-
-
-### 3. Additional Mini Projects
-
-This repository will be expanded with further tools, including:
-
-- file automation utilities
-- data parsing scripts
-- argparse-based command line tools  
-- SQLite-backed utilities  
-- colored terminal apps  
-- testable modules with separated logic and I/O  
-
-Each project is self-contained with its own module folder and README.
-
-## Philosophy
-
-This repository follows three principles:
-
-1. **Clarity**  
-   Code should be readable, predictable, and easy to maintain.
-
-2. **Purpose**  
-   Each project solves a concrete problem or showcases a specific technique.
-
-3. **Progress**  
-   New folders will appear over time, reflecting continuous skill development.
-
-## Structure
-
-```text
-python-toolbox/
-├── README.md
-├── todo_cli/
-│   ├── todo.py
-│   └── README.md
-├── file_tools/
-├── data_tools/
-└── learning/
+```bash
+git clone https://github.com/damik-physics/python-toolbox.git
+cd python-toolbox
+pip install .
 ```
 
-## Requirements
+## Available Tools
 
-Most projects require only standard Python 3.  
-Optional features may use:
+### 1. Project Scaffolder (`pt-init`)
 
-- `argparse`
-- `colorama`  
-- `sqlite3`
-- `pytest`
+A CLI utility to bootstrap new Python projects with production-ready defaults.
 
-Each subproject includes installation instructions if needed.
+- Standards: Generates PEP 621 compliant `pyproject.toml`.
+
+- Containerization: Includes hardened `Dockerfile` templates with non-root user security.
+
+- Structure: Enforces the professional `src` directory layout.
+
+### 2. Todo CLI (`todo`)
+
+A persistent task manager for terminal-centric workflows.
+
+- Storage: Lightweight JSON-based persistence.
+
+- Safety: Implements defensive programming for file handling and user input.
+
+### 3. Flashcard CLI (`flash`)
+
+A lightweight spaced-repetition training tool.
+
+- Modularity: Separation of core logic from I/O layers for better testability.
+
+### General remarks 
+
+- Packaging: Managed via `pyproject.toml` using `setuptools` as the build backend.
+
+- Layout: Adopts the `src` layout to ensure import isolation and reliable testing.
+
+- Automation: All tools are designed to be callable globally once installed.
+
+- Static Analysis: Pre-configured for `ruff` and `mypy`.
+
+
+## Directory Structure
+
+```plaintext
+python-toolbox/
+├── src/
+│   └── toolbox/            # Main package
+│       ├── scaffolder/     # Project Scaffolder
+│       ├── todo_cli/       # Todo Utility
+│       └── flashcards_cli/ # Spaced-repetition Tool
+├── pyproject.toml          # Build and dependency configuration
+└── README.md
+```
 
 ## License
 
-MIT License
+This project is licensed under the MIT License.
 
 ## Author
 
-David Mikhail  
-PhD in Theoretical Physics and computational researcher transitioning into applied software engineering, scientific computing and HPC development.
+David Mikhail, PhD Computational researcher and software engineer specializing in high-performance computing, automation, and backend systems.
