@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
+import re
 import typer
 
 MAIN_TEMPLATE = """
@@ -80,13 +81,19 @@ def init(project_name: str = typer.Argument(..., help="Name of the new project")
     """
     Creates a standardized, modular Python project structure.
     """
+
+    # Validate project name
+    if not re.match(r"^[a-zA-Z0-9_-]+$", project_name):
+        typer.secho("Error: Project name contains invalid characters.", fg="red", bold=True)
+        raise typer.Exit(code=1)
+    
     base_path = Path.cwd() / project_name
 
     # Check existence of directory
     if base_path.exists():
         typer.secho(f"Error: Directory {project_name} already exists.", fg="red")
-        raise typer.Exit()
-    
+        raise typer.Exit(code=1)
+        
     # Create directory structure
     package_name = project_name.replace("-", "_")
     dirs = [
@@ -109,4 +116,9 @@ def init(project_name: str = typer.Argument(..., help="Name of the new project")
     create_file(base_path / "Dockerfile", DOCKERFILE_TEMPLATE.format(project_name=package_name))
     create_file(base_path / ".dockerignore", DOCKERIGNORE_TEMPLATE)
 
-    typer.secho(f"Project {project_name} initialized with Docker and Packaging templates!", fg="green", bold=True)
+    typer.echo("") 
+    typer.secho("─" * 50, fg=typer.colors.BLUE)
+    typer.secho(f"Project '{project_name}' initialized successfully!", fg=typer.colors.GREEN, bold=True)
+    typer.secho(f"Path: {base_path}", fg=typer.colors.BRIGHT_WHITE)
+    typer.secho("─" * 50, fg=typer.colors.BLUE)
+    typer.echo("")
