@@ -34,7 +34,7 @@ my-new-project/
 └── README.md
 ```
 
-## Platform Engineering Highlights
+## Highlights
 
 This scaffolder implements several "Security by Design" and "Clean Code" principles:
 
